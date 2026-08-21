@@ -219,15 +219,21 @@ elseif (SKIA)
             LaTeX)
 
 
-# Get the base include path provided by vcpkg's target
+# Add these definitions right below your target initialization block
+target_compile_definitions(LaTeXQtSkiaSample PRIVATE 
+    SK_GANESH
+    SK_GL
+)
+
+# Ensure your include path configuration maps down to the base folders:
 get_target_property(VCPKG_INCLUDE_DIR unofficial::skia::skia INTERFACE_INCLUDE_DIRECTORIES)
 
-# Append the ganesh backend paths explicitly to target X
+# 2. Print the value to your terminal during configuration
+message(STATUS "DEBUG: VCPKG_INCLUDE_DIR is set to: ${VCPKG_INCLUDE_DIR}")
+
 target_include_directories(LaTeXQtSkiaSample INTERFACE 
     "${VCPKG_INCLUDE_DIR}/skia"
     "${VCPKG_INCLUDE_DIR}/skia/modules"
-    "${VCPKG_INCLUDE_DIR}/skia/gpu"        # Safely links base GPU layout properties
-    "${VCPKG_INCLUDE_DIR}/skia/gpu/ganesh" # Injects the restructured Ganesh directory
 )
             
     set_target_properties(LaTeXQtSkiaSample PROPERTIES OUTPUT_NAME LaTeX)
