@@ -9,6 +9,12 @@
 #include "graphic/graphic.h"
 #include <core/SkFont.h>
 #include <core/SkCanvas.h>
+
+//ADDED:
+#include <core/SkFontMgr.h>
+#include <core/SkTypeface.h>
+
+
 //#include <skia/core/SkFont.h>
 //#include <skia/core/SkCanvas.h>
 #include <map>
