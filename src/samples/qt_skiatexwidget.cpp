@@ -59,6 +59,7 @@ static sk_sp<GrDirectContext> makeContext(QOpenGLContext *ctx) {
   
   // 3. Invoke the standalone factory from the plural "GrDirectContexts" namespace
   sk_sp<GrDirectContext> context = GrDirectContexts::MakeGL(glInterface);
+  return context;
 }
 
 static sk_sp<SkSurface> createSurface(GrRecordingContext *ctx, int w, int h, GrGLuint fbo) {
@@ -87,7 +88,7 @@ static sk_sp<SkSurface> createSurface(GrRecordingContext *ctx, int w, int h, GrG
       nullptr,                       // Optional SkColorSpace pointer
       &props                        // Optional SkSurfaceProps pointer
   );
-
+  return surface;
 }
 
 TeXWidget::TeXWidget(QWidget *parent, float text_size)
