@@ -234,6 +234,22 @@ get_target_property(VCPKG_INCLUDE_DIR unofficial::skia::skia INTERFACE_INCLUDE_D
 # 2. Print the value to your terminal during configuration
 message(STATUS "DEBUG: VCPKG_INCLUDE_DIR is set to: ${VCPKG_INCLUDE_DIR}")
 
+message(STATUS "=== STARTING SKIA FILE LISTING ===")
+message(STATUS "Looking inside: ${VCPKG_INCLUDE_DIR}")
+
+# 2. Grab every file matching the pattern recursively
+file(GLOB_RECURSE SKIA_FILES 
+    RELATIVE "${VCPKG_INCLUDE_DIR}" 
+    "${VCPKG_INCLUDE_DIR}/*.h"
+)
+
+# 3. Print out each relative file path to the terminal log
+foreach(FILE_PATH ${SKIA_FILES})
+    message(STATUS "FOUND HEADER: ${FILE_PATH}")
+endforeach()
+
+message(STATUS "=== ENDING SKIA FILE LISTING ===")
+
 target_include_directories(LaTeXQtSkiaSample PRIVATE  
     "${VCPKG_INCLUDE_DIR}"
     "${VCPKG_INCLUDE_DIR}/skia"
