@@ -146,6 +146,10 @@ void TeXWidget::initializeGL() {
 void TeXWidget::paintGL() {
   auto *canvas = _surface->getCanvas();
   canvas->clear(SK_ColorWHITE);
+
+  double dpr = this->devicePixelRatioF(); 
+  canvas->scale(static_cast<SkScalar>(dpr), static_cast<SkScalar>(dpr));
+  
   SkPaint paint;
   if (_render) {
     Graphics2D_skia g2(canvas);
@@ -155,9 +159,16 @@ void TeXWidget::paintGL() {
 }
 
 void TeXWidget::resizeGL(int w, int h) {
-  _gl->glViewport(0, 0, w, h);
+  // If your Windows scale is set to 200%, this returns 2.0
+  double dpr = this->devicePixelRatioF(); 
+  
+  // Calculate the TRUE physical pixel resolution of the hardware framebuffer
+  int physicalWidth  = static_cast<int>(w * dpr);
+  int physicalHeight = static_cast<int>(h * dpr);
+  
+  _gl->glViewport(0, 0, physicalWidth, physicalHeight);
   _context->resetContext();
-  _surface = createSurface(_context.get(), w, h, defaultFramebufferObject());
+  _surface = createSurface(_context.get(), physicalWidth, physicalHeight, defaultFramebufferObject());
   update();
 }
 
