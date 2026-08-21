@@ -217,6 +217,19 @@ elseif (SKIA)
             Qt${QT_VERSION_MAJOR}::Widgets 
             Qt${QT_VERSION_MAJOR}::OpenGLWidgets 
             LaTeX)
+
+
+# Get the base include path provided by vcpkg's target
+get_target_property(VCPKG_INCLUDE_DIR unofficial::skia::skia INTERFACE_INCLUDE_DIRECTORIES)
+
+# Append the ganesh backend paths explicitly to target X
+target_include_directories(LaTeXQtSkiaSample INTERFACE 
+    "${VCPKG_INCLUDE_DIR}/skia"
+    "${VCPKG_INCLUDE_DIR}/skia/modules"
+    "${VCPKG_INCLUDE_DIR}/skia/gpu"        # Safely links base GPU layout properties
+    "${VCPKG_INCLUDE_DIR}/skia/gpu/ganesh" # Injects the restructured Ganesh directory
+)
+            
     set_target_properties(LaTeXQtSkiaSample PROPERTIES OUTPUT_NAME LaTeX)
     set_target_properties(LaTeXQtSkiaSample PROPERTIES AUTOMOC ON)
 elseif (WIN32)
