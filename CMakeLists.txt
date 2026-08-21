@@ -214,7 +214,9 @@ elseif (SKIA)
             src/samples/qt_main.cpp
             )
     target_link_libraries(LaTeXQtSkiaSample PRIVATE
-            Qt${QT_VERSION_MAJOR}::Widgets LaTeX)
+            Qt${QT_VERSION_MAJOR}::Widgets 
+            Qt${QT_VERSION_MAJOR}::OpenGLWidgets 
+            LaTeX)
     set_target_properties(LaTeXQtSkiaSample PROPERTIES OUTPUT_NAME LaTeX)
     set_target_properties(LaTeXQtSkiaSample PROPERTIES AUTOMOC ON)
 elseif (WIN32)
