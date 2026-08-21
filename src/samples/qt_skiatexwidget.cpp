@@ -63,7 +63,15 @@ static sk_sp<SkSurface> createSurface(GrRecordingContext *ctx, int w, int h, GrG
   GrGLFramebufferInfo info;
   info.fFBOID = fbo;
   info.fFormat = GL_RGBA8;
-  GrBackendRenderTarget target(w, h, 0, 8, info);
+  //  GrBackendRenderTarget target(w, h, 0, 8, info);
+  GrBackendRenderTarget target = GrBackendRenderTargets::MakeGL(
+      w,     // Width
+      h,     // Height
+      0,     // Sample Count
+      8,     // Stencil Bits
+      info   // GrGLFramebufferInfo object
+  );
+  
   const SkSurfaceProps props(0, SkPixelGeometry::kUnknown_SkPixelGeometry);  // Can customize subpixel layout here
   //return SkSurface::MakeFromBackendRenderTarget(ctx, target, kBottomLeft_GrSurfaceOrigin, kRGBA_8888_SkColorType,
   //                                              nullptr, &props, nullptr);
