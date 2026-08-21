@@ -28,10 +28,10 @@
 
 // 1. Instantiate the native Windows DirectWrite Font Manager explicitly
 #if defined(_WIN32)
-    sk_sp<SkFontMgr> fontManager = SkFontMgr_New_DirectWrite();
+inline     sk_sp<SkFontMgr> fontManager = SkFontMgr_New_DirectWrite();
 #else
     // Fallback if you compile cross-platform down the road
-    sk_sp<SkFontMgr> fontManager = SkFontMgr_New_Custom_Directory("/path/to/fonts");
+inline     sk_sp<SkFontMgr> fontManager = SkFontMgr_New_Custom_Directory("/path/to/fonts");
 #endif
 
 
