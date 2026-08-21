@@ -9,8 +9,8 @@
 #include "latex.h"
 #include <QOpenGLWidget>
 
-#include <gpu/GrDirectContext.h>
-//#include <gpu/ganesh/GrDirectContext.h>
+//#include <gpu/GrDirectContext.h>
+#include private/gpu/ganesh/GrDirectContext.h>
 
 #include <core/SkSurface.h>
 
