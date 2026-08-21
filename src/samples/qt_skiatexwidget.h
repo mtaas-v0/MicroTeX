@@ -8,7 +8,10 @@
 #include "platform/qt/graphic_qt.h"
 #include "latex.h"
 #include <QOpenGLWidget>
-#include <gpu/GrDirectContext.h>
+
+//#include <gpu/GrDirectContext.h>
+#include <gpu/ganesh/GrDirectContext.h>
+
 #include <core/SkSurface.h>
 
 class QOpenGLFunctions;
