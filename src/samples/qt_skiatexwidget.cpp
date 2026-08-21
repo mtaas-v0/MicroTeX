@@ -14,6 +14,7 @@
 #include <gpu/ganesh/SkSurfaceGanesh.h>
 #include <gpu/ganesh/gl/GrGLBackendSurface.h>
 #include <gpu/ganesh/GrBackendSurface.h>
+#include <core/SkColorSpace.h> 
 
 #include <QApplication>
 #include <svg/SkSVGCanvas.h>
