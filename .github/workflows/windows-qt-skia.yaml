@@ -28,14 +28,15 @@ jobs:
     - name: Swap to Skia Manifest for CI
       run: Copy-Item -Path "vcpkg-ci-skia.json" -Destination "vcpkg.json" -Force
 
-    - name: Cache vcpkg artifacts
+    - name: Cache Full #vcpkg artifacts
       id: cache-vcpkg
       uses: actions/cache@v4
       with:
-        path: ${{ github.workspace }}/vcpkg_cache
-        key: ${{ runner.os }}-vcpkg-skia-${{ hashFiles('vcpkg.json') }}
+        path: ${{ github.workspace }} #/vcpkg_cache
+        #key: ${{ runner.os }}-vcpkg-skia-${{ hashFiles('vcpkg.json') }}
+        key: ${{ runner.os }}-full-skia-${{ hashFiles('vcpkg.json') }}
         restore-keys: |
-          ${{ runner.os }}-vcpkg-skia-
+          ${{ runner.os }}-full-skia-
 
     - name: Downloading CMake 📥
       # Install latest CMake.
@@ -71,6 +72,7 @@ jobs:
           # target: ${{ matrix.qt_target }}
         arch: ${{ matrix.qt_arch }}
         aqtversion: '==3.3.0' # Forces the use of the latest fixed parser engine
+        cache: true        
 #        cached: 'false'
 
         # Qt Off due to logic in CMakeList.txt, actually it will be Qt+Skia
