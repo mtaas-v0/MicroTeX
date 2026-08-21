@@ -14,6 +14,26 @@
 #include <core/SkFontMgr.h>
 #include <core/SkTypeface.h>
 
+#ifdef _out_
+  #undef _out_
+#endif
+#define _out_ // Reset it safely to empty if a third-party script demands it
+
+#include <ports/SkFontMgr_data.h> // Explicit backend dependencies
+#include <ports/SkFontMgr_directory.h>
+
+#if defined(_WIN32)
+  #include <ports/SkTypeface_win.h> // Necessary for DirectWrite on Windows
+#endif
+
+// 1. Instantiate the native Windows DirectWrite Font Manager explicitly
+#if defined(_WIN32)
+    sk_sp<SkFontMgr> fontManager = SkFontMgr_New_DirectWrite();
+#else
+    // Fallback if you compile cross-platform down the road
+    sk_sp<SkFontMgr> fontManager = SkFontMgr_New_Custom_Directory("/path/to/fonts");
+#endif
+
 
 //#include <skia/core/SkFont.h>
 //#include <skia/core/SkCanvas.h>
