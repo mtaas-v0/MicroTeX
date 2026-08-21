@@ -61,7 +61,17 @@ jobs:
         cd ${{ github.workspace }}
         cd build
         ninja
+
+    - name: Package Qt DLLs (Windows)
+      run: |
+        # 1. Locate windeployqt using the environment variable set by the Qt action
+        echo "Using Qt path: $env:Qt6_DIR"
         
+        # 2. Run windeployqt pointing to your compiled executable
+        # Replace 'builddir/your_app.exe' with your actual executable path
+        windeployqt --no-compiler-runtime build/LaTeX.exe
+      shell: pwsh
+      
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
       with:
