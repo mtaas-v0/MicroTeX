@@ -10,7 +10,8 @@
 // #include <gpu/ganesh/gl/GrGLAssembleInterface.h>
 // 1. Include the modern dedicated factory header
 #include <gpu/ganesh/gl/GrGLDirectContext.h> 
-
+#include <gpu/ganesh/gl/GrGLInterface.h>
+#include <gpu/ganesh/SkSurfaceGanesh.h>
 
 #include <QApplication>
 #include <svg/SkSVGCanvas.h>
@@ -63,8 +64,19 @@ static sk_sp<SkSurface> createSurface(GrRecordingContext *ctx, int w, int h, GrG
   info.fFormat = GL_RGBA8;
   GrBackendRenderTarget target(w, h, 0, 8, info);
   const SkSurfaceProps props(0, SkPixelGeometry::kUnknown_SkPixelGeometry);  // Can customize subpixel layout here
-  return SkSurface::MakeFromBackendRenderTarget(ctx, target, kBottomLeft_GrSurfaceOrigin, kRGBA_8888_SkColorType,
-                                                nullptr, &props, nullptr);
+  //return SkSurface::MakeFromBackendRenderTarget(ctx, target, kBottomLeft_GrSurfaceOrigin, kRGBA_8888_SkColorType,
+  //                                              nullptr, &props, nullptr);
+  
+  // 2. Invoke the modern, pluralized "SkSurfaces" factory namespace
+  sk_sp<SkSurface> surface = SkSurfaces::WrapBackendRenderTarget(
+      ctx,                 // Your GrDirectContext pointer
+      target,                        // Your GrBackendRenderTarget instance
+      kBottomLeft_GrSurfaceOrigin,   // Orientation matrix rule
+      kRGBA_8888_SkColorType,        // Pixmap structure color arrangement
+      nullptr,                       // Optional SkColorSpace pointer
+      &props                        // Optional SkSurfaceProps pointer
+  );
+
 }
 
 TeXWidget::TeXWidget(QWidget *parent, float text_size)
