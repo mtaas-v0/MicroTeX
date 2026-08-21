@@ -96,9 +96,16 @@ jobs:
         # Replace 'builddir/your_app.exe' with your actual executable path
         windeployqt --no-compiler-runtime build/LaTeX.exe
       shell: pwsh
+
+    - name: Upload Failure Artifact
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: failure-build-dir-qt-skia-r${{ github.run_number }}
+        path: .
       
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
       with:
         name: build-qt-skia-r${{ github.run_number }}
-        path: .
+        path: build
