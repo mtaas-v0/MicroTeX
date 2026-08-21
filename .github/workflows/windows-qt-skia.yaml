@@ -108,7 +108,7 @@ jobs:
       shell: pwsh
 
     - name: Upload Failure Artifact
-      if: ${{ failure() }}
+      if: ${{ false && failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: failure-build-dir-qt-skia-r${{ github.run_number }}
