@@ -28,6 +28,15 @@ jobs:
     - name: Swap to Skia Manifest for CI
       run: Copy-Item -Path "vcpkg-ci-skia.json" -Destination "vcpkg.json" -Force
 
+    - name: Cache vcpkg artifacts
+      id: cache-vcpkg
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/vcpkg_cache
+        key: ${{ runner.os }}-vcpkg-skia-${{ hashFiles('vcpkg.json') }}
+        restore-keys: |
+          ${{ runner.os }}-vcpkg-skia-
+
     - name: Downloading CMake 📥
       # Install latest CMake.
       uses: lukka/get-cmake@latest
