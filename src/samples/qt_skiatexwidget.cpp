@@ -5,7 +5,10 @@
 #include <core/SkCanvas.h>
 #include <QOpenGLFunctions>
 #include "platform/skia/graphic_skia.h"
-#include <gpu/gl/GrGLAssembleInterface.h>
+
+//#include <gpu/gl/GrGLAssembleInterface.h>
+#include <gpu/ganesh/gl/GrGLAssembleInterface.h>
+
 #include <QApplication>
 #include <svg/SkSVGCanvas.h>
 #include <core/SkStream.h>
