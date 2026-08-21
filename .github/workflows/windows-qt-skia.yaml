@@ -28,15 +28,24 @@ jobs:
     - name: Swap to Skia Manifest for CI
       run: Copy-Item -Path "vcpkg-ci-skia.json" -Destination "vcpkg.json" -Force
 
-    - name: Cache Full #vcpkg artifacts
-      id: cache-vcpkg
+    # Step 1: Cache vcpkg artifacts (Keep your existing step)
+    - name: Cache vcpkg artifacts
       uses: actions/cache@v4
       with:
-        path: ${{ github.workspace }} #/vcpkg_cache
-        #key: ${{ runner.os }}-vcpkg-skia-${{ hashFiles('vcpkg.json') }}
-        key: ${{ runner.os }}-full-skia-${{ hashFiles('vcpkg.json') }}
+        path: ${{ github.workspace }}/vcpkg_cache
+        key: ${{ runner.os }}-vcpkg-skia-${{ hashFiles('vcpkg.json') }}
+        restore-keys: ${{ runner.os }}-vcpkg-skia-
+
+    # Step 2: NEW - Cache the CMake / Meson Build Directory
+    - name: Cache CMake Build Directory
+      id: cache-cmake
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/build
+        # Invalidate the cache if your build scripts or dependencies change
+        key: ${{ runner.os }}-cmake-build-${{ hashFiles('CMakeLists.txt', 'meson.build', 'vcpkg.json') }}
         restore-keys: |
-          ${{ runner.os }}-full-skia-
+          ${{ runner.os }}-cmake-build-
 
     - name: Downloading CMake 📥
       # Install latest CMake.
@@ -77,6 +86,7 @@ jobs:
 
         # Qt Off due to logic in CMakeList.txt, actually it will be Qt+Skia
     - name: Configure 🔧
+      if: steps.cache-cmake.outputs.cache-hit != 'true'
       run: |
         cd ${{ github.workspace }}
         cd build
