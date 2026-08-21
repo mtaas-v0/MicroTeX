@@ -61,3 +61,9 @@ jobs:
         cd ${{ github.workspace }}
         cd build
         ninja
+        
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-qt-r${{ github.run_number }}
+        path: .
