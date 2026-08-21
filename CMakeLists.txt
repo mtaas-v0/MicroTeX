@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 project(LaTeX)
 
+
+option(BUILD_MY_TEX2SVG "Build my optional target" OFF)
+
 add_library(LaTeX "")
+
 
 # MSVC Compat
 
@@ -209,11 +213,13 @@ elseif (WIN32)
     set_target_properties(LaTeXWin32Sample PROPERTIES OUTPUT_NAME LaTeX)
 
     # tex2svg.exe
-    add_executable(LaTeX2SVGWin32Sample WIN32
-            src/samples/tex2svg_main.cpp
-            )
-    target_link_libraries(LaTeX2SVGWin32Sample PRIVATE LaTeX)
-    set_target_properties(LaTeX2SVGWin32Sample PROPERTIES OUTPUT_NAME tex2svg)
+    if(BUILD_MY_TEX2SVG)
+        add_executable(LaTeX2SVGWin32Sample WIN32
+                src/samples/tex2svg_main.cpp
+                )
+        target_link_libraries(LaTeX2SVGWin32Sample PRIVATE LaTeX)
+        set_target_properties(LaTeX2SVGWin32Sample PROPERTIES OUTPUT_NAME tex2svg)
+    endif()
 elseif (UNIX)
     message(STATUS "We are working with GTK on a Unix like OS")
     target_compile_definitions(LaTeX PUBLIC -DBUILD_GTK)
