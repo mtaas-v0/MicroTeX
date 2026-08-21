@@ -7,7 +7,10 @@
 #include "platform/skia/graphic_skia.h"
 
 //#include <gpu/gl/GrGLAssembleInterface.h>
-#include <gpu/ganesh/gl/GrGLAssembleInterface.h>
+// #include <gpu/ganesh/gl/GrGLAssembleInterface.h>
+// 1. Include the modern dedicated factory header
+#include <gpu/ganesh/gl/GrGLDirectContext.h> 
+
 
 #include <QApplication>
 #include <svg/SkSVGCanvas.h>
@@ -40,10 +43,18 @@ void initGL() {
 }
 
 static sk_sp<GrDirectContext> makeContext(QOpenGLContext *ctx) {
-  auto interface = GrGLMakeAssembledInterface(ctx, [](auto ctx, auto name) {
+  /*
+    auto interface = GrGLMakeAssembledInterface(ctx, [](auto ctx, auto name) {
     return AllowEGL || strncmp(name, "egl", 3) ? static_cast<QOpenGLContext *>(ctx)->getProcAddress(name) : nullptr;
   });
   return GrDirectContext::MakeGL(interface);
+  */
+    
+  // 2. Fetch the native function pointers for QOpenGLWidget's current context
+  auto glInterface = GrGLMakeNativeInterface();
+  
+  // 3. Invoke the standalone factory from the plural "GrDirectContexts" namespace
+  sk_sp<GrDirectContext> context = GrDirectContexts::MakeGL(glInterface);
 }
 
 static sk_sp<SkSurface> createSurface(GrRecordingContext *ctx, int w, int h, GrGLuint fbo) {
