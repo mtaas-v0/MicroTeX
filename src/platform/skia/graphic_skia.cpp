@@ -4,12 +4,6 @@
 
 #include "platform/skia/graphic_skia.h"
 
-#ifdef _out_
-  #undef _out_
-#endif
-#define _out_ // Reset it safely to empty if a third-party script demands it
-
-
 #include <utility>
 
 using namespace tex;
