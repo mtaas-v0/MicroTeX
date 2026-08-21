@@ -185,16 +185,17 @@ elseif (SKIA)
         target_link_libraries(LaTeX PRIVATE unofficial::skia::skia)
     
         #target_link_libraries(LaTeX INTERFACE skia skia::skia) #original
-                
-        # 2. Extract the exact folder location vcpkg assigned to your target
-        get_target_property(VCPKG_INCLUDE_DIR unofficial-skia INTERFACE_INCLUDE_DIRECTORIES)
-        
-        # 3. Patch the internal relative path bug explicitly for target X
-        target_include_directories(LaTeX INTERFACE 
-            "${VCPKG_INCLUDE_DIR}/skia"
-            "${VCPKG_INCLUDE_DIR}/skia/modules"
-        )
 
+        if (FALSE)
+            # 2. Extract the exact folder location vcpkg assigned to your target
+            get_target_property(VCPKG_INCLUDE_DIR unofficial-skia INTERFACE_INCLUDE_DIRECTORIES)
+            
+            # 3. Patch the internal relative path bug explicitly for target X
+            target_include_directories(LaTeX INTERFACE 
+                "${VCPKG_INCLUDE_DIR}/skia"
+                "${VCPKG_INCLUDE_DIR}/skia/modules"
+            )
+        endif ()
     else ()
         include_directories(../skia ../skia/include)
         link_directories(../skia)
