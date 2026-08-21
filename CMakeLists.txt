@@ -200,7 +200,7 @@ elseif (SKIA)
         include_directories(../skia ../skia/include)
         link_directories(../skia)
     endif ()
-    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Widgets REQUIRED)
+    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Widgets OpenGLWidgets REQUIRED)
     find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets REQUIRED)
     target_sources(LaTeX PRIVATE
             src/platform/skia/graphic_skia.cpp
