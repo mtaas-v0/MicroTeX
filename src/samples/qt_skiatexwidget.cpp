@@ -13,6 +13,7 @@
 #include <gpu/ganesh/gl/GrGLInterface.h>
 #include <gpu/ganesh/SkSurfaceGanesh.h>
 #include <gpu/ganesh/gl/GrGLBackendSurface.h>
+#include <gpu/ganesh/GrBackendSurface.h>
 
 #include <QApplication>
 #include <svg/SkSVGCanvas.h>
