@@ -1,7 +1,8 @@
 name: Windows Qt
 
 on: 
-  - push
+  - workflow_dispatch
+#  - push
   - pull_request
 
 jobs:
