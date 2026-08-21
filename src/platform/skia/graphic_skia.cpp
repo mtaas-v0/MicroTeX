@@ -32,7 +32,12 @@ sk_sp<SkTypeface> Font_skia::loadTypefaceFromName(const string &family, int styl
     SkFontStyle fontStyle(style & BOLD ? SkFontStyle::kBold_Weight : SkFontStyle::kNormal_Weight,
                           SkFontStyle::kNormal_Width,
                           style & ITALIC ? SkFontStyle::kItalic_Slant : SkFontStyle::kUpright_Slant);
-    auto typeface = SkTypeface::MakeFromName(family.c_str(), fontStyle);
+    //auto typeface = SkTypeface::MakeFromName(family.c_str(), fontStyle);
+// 1. Fetch the native platform font engine (DirectWrite on Windows)
+sk_sp<SkFontMgr> fontManager = SkFontMgr::RefDefault();
+// 2. Look up the closest matching font by family name and style properties
+auto typeface = fontManager->matchFamilyStyle(family.c_str(), fontStyle);
+    
     _named_typefaces[key] = typeface;
     return typeface;
   }
