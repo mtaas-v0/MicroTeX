@@ -7,7 +7,7 @@
     {
       "name": "skia",
       "default-features": false,
-      "features": ["gl",  "win-font"]
+      "features": ["gl"]
     }
   ]
 }
