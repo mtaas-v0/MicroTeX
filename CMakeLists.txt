@@ -208,6 +208,9 @@ elseif (SKIA)
     target_link_libraries(LaTeX PRIVATE
             Qt${QT_VERSION_MAJOR}::Core
             )
+
+
+    # LaTeXQtSkiaSample
     add_executable(LaTeXQtSkiaSample
             src/samples/qt_skiatexwidget.cpp
             src/samples/qt_mainwindow.cpp
@@ -231,7 +234,8 @@ get_target_property(VCPKG_INCLUDE_DIR unofficial::skia::skia INTERFACE_INCLUDE_D
 # 2. Print the value to your terminal during configuration
 message(STATUS "DEBUG: VCPKG_INCLUDE_DIR is set to: ${VCPKG_INCLUDE_DIR}")
 
-target_include_directories(LaTeXQtSkiaSample INTERFACE 
+target_include_directories(LaTeXQtSkiaSample PRIVATE  
+    "${VCPKG_INCLUDE_DIR}"
     "${VCPKG_INCLUDE_DIR}/skia"
     "${VCPKG_INCLUDE_DIR}/skia/modules"
 )
