@@ -7,10 +7,10 @@
 
 #include <string>
 #include "graphic/graphic.h"
-//#include <core/SkFont.h>
-//#include <core/SkCanvas.h>
-#include <skia/core/SkFont.h>
-#include <skia/core/SkCanvas.h>
+#include <core/SkFont.h>
+#include <core/SkCanvas.h>
+//#include <skia/core/SkFont.h>
+//#include <skia/core/SkCanvas.h>
 #include <map>
 #include <QtCore/QString>
 
