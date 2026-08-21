@@ -1,0 +1,12 @@
+{
+  "name": "cpp-latex-render",
+  "version": "0.0.1",
+  "dependencies": [
+    "tinyxml2",
+    "pkgconf",
+    {
+      "name": "skia",
+      "features": ["gl"] 
+    }
+  ]
+}
