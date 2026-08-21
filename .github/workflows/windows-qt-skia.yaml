@@ -39,6 +39,13 @@ jobs:
       if: runner.os == 'Windows'
       with:
         arch: x64
+
+    # Step 4: Install Skia (Will hit cache if key matches)
+    - name: Install Skia via vcpkg
+      run: |
+        vcpkg install skia:x64-windows
+      shell: bash
+      
     - name: Downloading Qt 📥
     #v2 has py7zr build from src then crash at _PyLong_AsInt api not longer exposed in py313 or above
     #v3 has a problem [qt_base] not parsed from xml
