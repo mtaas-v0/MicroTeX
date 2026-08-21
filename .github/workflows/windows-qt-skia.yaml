@@ -24,6 +24,10 @@ jobs:
     steps:
     - name: Downloading Source Code 📥
       uses: actions/checkout@v2
+      
+    - name: Swap to Skia Manifest for CI
+      run: Copy-Item -Path "vcpkg-ci-skia.json" -Destination "vcpkg.json" -Force
+
     - name: Downloading CMake 📥
       # Install latest CMake.
       uses: lukka/get-cmake@latest
@@ -42,6 +46,7 @@ jobs:
 
     # Step 4: Install Skia (Will hit cache if key matches)
     - name: Install Skia via vcpkg
+      if: false #using vcpkg-ci-skia.json
       run: |
         vcpkg install skia:x64-windows
       shell: bash
