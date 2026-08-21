@@ -44,5 +44,5 @@ jobs:
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: build-director-v${{ github.run_number }}
-        path: .
+        name: build-win32gdi-v${{ github.run_number }}
+        path: build
