@@ -40,7 +40,9 @@ jobs:
       with:
         arch: x64
     - name: Downloading Qt 📥
-      uses: jurplel/install-qt-action@v3
+    #v2 has py7zr build from src then crash at _PyLong_AsInt api not longer exposed in py313 or above
+    #v3 has a problem [qt_base] not parsed from xml
+      uses: jurplel/install-qt-action@v4
       with:
           # Version of Qt to install
         version: ${{ matrix.qt_ver }}
