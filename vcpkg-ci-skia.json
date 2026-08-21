@@ -6,6 +6,7 @@
     "pkgconf",
     {
       "name": "skia",
+      "default-features": false,
       "features": ["gl"] 
     }
   ]
