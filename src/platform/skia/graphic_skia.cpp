@@ -6,6 +6,8 @@
 
 #include <utility>
 
+
+
 using namespace tex;
 using namespace std;
 
@@ -34,7 +36,7 @@ sk_sp<SkTypeface> Font_skia::loadTypefaceFromName(const string &family, int styl
                           style & ITALIC ? SkFontStyle::kItalic_Slant : SkFontStyle::kUpright_Slant);
     //auto typeface = SkTypeface::MakeFromName(family.c_str(), fontStyle);
 // 1. Fetch the native platform font engine (DirectWrite on Windows)
-sk_sp<SkFontMgr> fontManager = SkFontMgr::RefDefault();
+//sk_sp<SkFontMgr> fontManager = SkFontMgr::RefDefault();
 // 2. Look up the closest matching font by family name and style properties
 auto typeface = fontManager->matchFamilyStyle(family.c_str(), fontStyle);
     
@@ -53,7 +55,7 @@ sk_sp<SkTypeface> Font_skia::loadTypefaceFromFile(const string &file) {
 
 
 // 1. Fetch the platform-native font manager (DirectWrite on Windows)
-sk_sp<SkFontMgr> fontManager = SkFontMgr::RefDefault();
+// sk_sp<SkFontMgr> fontManager = SkFontMgr::RefDefault();
 // 2. Safely resolve the typeface file through the manager
 sk_sp<SkTypeface> typeface = fontManager->makeFromFile(file.c_str(), 0);
 
