@@ -49,7 +49,8 @@ jobs:
           # Target platform for build
           # target: ${{ matrix.qt_target }}
         arch: ${{ matrix.qt_arch }}
-        cached: 'false'
+        aqtversion: '==3.3.0' # Forces the use of the latest fixed parser engine
+#        cached: 'false'
     - name: Configure 🔧
       run: |
         cd ${{ github.workspace }}
