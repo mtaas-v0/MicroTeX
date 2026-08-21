@@ -37,15 +37,13 @@ jobs:
         restore-keys: ${{ runner.os }}-vcpkg-skia-
 
     # Step 2: NEW - Cache the CMake / Meson Build Directory
-    - name: Cache CMake Build Directory
-      id: cache-cmake
-      uses: actions/cache@v4
-      with:
+    - name: Restore Cache
+      uses: actions/cache/restore@v4
+      id: cache-restore
+      with: &cache_config
         path: ${{ github.workspace }}/build
-        # Invalidate the cache if your build scripts or dependencies change
         key: ${{ runner.os }}-cmake-build-${{ hashFiles('CMakeLists.txt', 'meson.build', 'vcpkg.json') }}
-        restore-keys: |
-          ${{ runner.os }}-cmake-build-
+        restore-keys: ${{ runner.os }}-cmake-build-
 
     - name: Downloading CMake 📥
       # Install latest CMake.
@@ -86,17 +84,24 @@ jobs:
 
         # Qt Off due to logic in CMakeList.txt, actually it will be Qt+Skia
     - name: Configure 🔧
-      if: steps.cache-cmake.outputs.cache-hit != 'true'
+      if: steps.cache-restore.outputs.cache-hit != 'true'
       run: |
         cd ${{ github.workspace }}
         cd build
         cmake .. -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -DSKIA=ON -DQT=OFF -DCMAKE_BUILD_TYPE=Release -G Ninja
+    
     - name: Compile 🎲
       run: |
         cd ${{ github.workspace }}
         cd build
         ninja
 
+    # 2. Save the cache using an alias to inject the exact same config
+    - name: Always Save Cache
+      uses: actions/cache/save@v4
+      if: always() && steps.cache-restore.outputs.cache-hit != 'true'
+      with: *cache_config
+      
     - name: Package Qt DLLs (Windows)
       run: |
         # 1. Locate windeployqt using the environment variable set by the Qt action
